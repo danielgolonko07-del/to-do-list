@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To do app</title>
 </head>
+
 <body>
 
   <label for="inputTask">New Task:</label>
   <input type="text" placeholder="Add a new task" id="inputTask">
   <button onclick="addTask()">Add Task</button>
-  <div id="taskList"></div>
-  <div id="doneTask"></div>
+  <div>
+    <h3>To do:</h3>
+    <span id="taskList"></span>
+  </div>
+  <div>
+    <h3>Done:</h3>
+    <span id="doneTask"></span>
+  </div>
 
   <script src="to-do-list.js"></script>
 </body>

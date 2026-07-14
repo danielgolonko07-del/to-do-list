@@ -1,83 +1,59 @@
 const inputTask = document.getElementById('inputTask');
-const taskListElement = document.getElementById('taskList')
-const doneTaskElement = document.getElementById('doneTask')
-let taskList = []
-let completedTasks = []
-let doneTask = []
+const taskListElement = document.getElementById('taskList');
+const doneTaskElement = document.getElementById('doneTask');
+
+let tasks = [];
 
 function renderTaskList() {
   taskListElement.innerHTML = '';
+  doneTaskElement.innerHTML = '';
 
-  taskList.forEach(task => {
+  tasks.forEach(task => {
     const li = document.createElement('li');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    checkbox.checked = task.done;
 
     const text = document.createElement('span');
-    text.innerText = task;
+    text.innerText = task.text;
+
+    if (task.done) {
+      text.style.textDecoration = 'line-through';
+    }
 
     checkbox.addEventListener('change', () => {
-      if (checkbox.checked) {
-        text.style.textDecoration = 'line-through';
-      } else {
-        text.style.textDecoration = 'none';
-      }
-    });
-
-    const doneButton = document.createElement('button');
-    doneButton.innerText = 'Done';
-
-    checkbox.addEventListener('click', () => {
-      const index = taskList.indexOf(task);
-
-      if (index > -1) {
-        doneTask.push(task)
-        taskList.splice(index, 1);
-      }
-
+      task.done = checkbox.checked;
       renderTaskList();
-      renderDoneList();
     });
-
-function renderDoneList() {
-  doneTaskElement.innerHTML = '';
-  doneTask.forEach(task => {
-    const doneLi = document.createElement('li')
-    doneLi.innerHTML = task 
-
-    doneTaskElement.appendChild(doneLi)
-
-    doneLi.style.textDecoration = 'line-through'
-
-  })
-
-}
 
     li.appendChild(checkbox);
     li.appendChild(text);
-    li.appendChild(doneButton);
-    doneTaskElement.appendChild(li);
 
-    taskListElement.appendChild(li);
+    if (task.done) {
+      doneTaskElement.appendChild(li);
+    } else {
+      taskListElement.appendChild(li);
+    }
   });
 }
 
 function addTask() {
   const task = inputTask.value.trim();
 
-  if (task === '') {
-    return;
-  }
+  if (task === '') return;
 
+  tasks.push({
+    text: task,
+    done: false
+  });
 
-  taskList.push(task);
-  renderTaskList()
   inputTask.value = '';
+  renderTaskList();
 }
 
 inputTask.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    addTask()
+    addTask();
   }
-})
+});
